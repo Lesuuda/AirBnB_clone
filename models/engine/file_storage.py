@@ -11,6 +11,9 @@ from models.base_model import BaseModel
 
 
 
+classes = {'BaseModel': BaseModel}
+
+
 class FileStorage():
     """
      class FileStorage that serializes instances to a JSON file and
@@ -51,6 +54,14 @@ class FileStorage():
                 {key: value.to_dict() for key, value in FileStorage.__objects.items()}, f)
         
     def reload(self):
+        """
+        deserializes the JSON file to __objects (only if the JSON file (__file_path) exists;
+        otherwise, do nothing.
+        If the file doesn’t exist, no exception should be raised)
+        """
+
+        classes = {'BaseModel': BaseModel}
+
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as f:
                 file_content = f.read()
