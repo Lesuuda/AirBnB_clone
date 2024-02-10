@@ -91,6 +91,31 @@ class HBNBCommand(cmd.Cmd):
                 return
             print(required_key)
 
+    def do_destroy(self, args):
+        """
+         Deletes an instance based on the class name and id
+         (save the change into the JSON file)
+        """
+        args_list = args.split()
+        if len(args_list) < 1:
+            print("** classname missing **")
+            return False
+        elif args_list[0] not in classes:
+            print("** class doesn't exist **")
+            return False
+        elif id and len(args_list) < 2:
+            print("** instance id missing **")
+            return False
+        else:
+            objects = storage.all()
+            key = "{}.{}".format(args_list[0], args_list[1])
+            required_key = objects.get(key, None)
+            if required_key is None:
+                print("** no instance found ***")
+                return
+            del objects[key]
+            storage.save()
+
     def do_quit(self, args):
         """Quit command to exit the program"""
         return True
