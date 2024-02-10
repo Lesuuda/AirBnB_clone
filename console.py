@@ -115,6 +115,25 @@ class HBNBCommand(cmd.Cmd):
                 return
             del objects[key]
             storage.save()
+    
+    def do_all(self, args):
+        """
+        Prints all string representation of all instances based or not on the class name
+        """
+        args_list = args.split()
+        objects = storage.all()
+        if len(args) < 1:
+            for key, value in objects.items():
+                print(str(value))
+                return
+
+        if args_list[0] not in classes:
+            print("** class doesn't exist")
+            return
+        else:
+            for key, value in objects.items():
+                print(str(value))
+        
 
     def do_quit(self, args):
         """Quit command to exit the program"""
