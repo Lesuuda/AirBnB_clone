@@ -6,41 +6,18 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
-classes = {'BaseModel': BaseModel}
+classes = {'BaseModel': BaseModel, 'User': User}
 
-
-def validate_class(args, id=True):
-        """validates the class and the number of arguments provided"""
-        args_list = args.split()
-
-        if len(args_list) < 1:
-            print("** classname missing **")
-            return False
-        if args_list[0] not in classes.keys():
-            print("** class doesn't exist **")
-            return False
-        if id and len(args_list) < 2:
-            print("** instance id missing **")
-            return False
-        if id:
-            instance_id = args_list[1]
-            print(type(instance_id))
-            key = "{}".format(instance_id)
-            if key not in storage.all():
-                print("** no instance found **")
-                print(type(key))
-                return False
-        return True
-
-       
 
 class HBNBCommand(cmd.Cmd):
     """
     command interpreter should implement:
     quit and EOF to exit the program
-    help (this action is provided by default by cmd but you should keep it updated and documented as you work through tasks)
+    help (this action is provided by default by cmd but
+    you should keep it updated and documented as you work through tasks)
     a custom prompt: (hbnb)
     an empty line + ENTER shouldn’t execute anything
     Your code should not be executed when imported
@@ -63,8 +40,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return False
         else:
-            new_instance = BaseModel()
-            storage.save()
+            new_instance = classes[args_list[0]]()
+            new_instance.save()
             print(new_instance.id)
 
 
@@ -136,8 +113,7 @@ class HBNBCommand(cmd.Cmd):
     
     def do_update(self, args):
         """
-        Updates an instance based on the class name and id by adding or
-        updating attribute (save the change into the JSON file)
+        update <class name> <id> <attribute name> "<attribute value>"
         """
         args_list = args.split(maxsplit=3)
         if len(args_list) < 1:

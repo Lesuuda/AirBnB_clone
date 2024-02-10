@@ -8,10 +8,7 @@
 import json
 import os
 from models.base_model import BaseModel
-
-
-
-classes = {'BaseModel': BaseModel}
+from models.user import User
 
 
 class FileStorage():
@@ -60,7 +57,7 @@ class FileStorage():
         If the file doesn’t exist, no exception should be raised)
         """
 
-        classes = {'BaseModel': BaseModel}
+        classes = {'BaseModel': BaseModel, 'User': User}
 
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as f:
@@ -68,7 +65,9 @@ class FileStorage():
                 if file_content:
                     try:
                         dict_obj = json.loads(file_content)
-                        FileStorage.__objects = {key: BaseModel(**value) for key, value in dict_obj.items()}
+                        FileStorage.__objects = {
+                k: classes[k.split('.')[0]](**v)
+                for k, v in dict_obj.items()}
                     except json.JSONDecodeError:
                         pass
                 else:
