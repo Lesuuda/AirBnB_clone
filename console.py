@@ -65,29 +65,23 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
 
-    def do_show(self, args):
+    def do_show(self, line):
+        """Prints the string representation of an instance.
         """
-        Prints the string representation of an instance based
-        on the class name and id.
-        """
-        args_list = args.split()
-        if len(args_list) < 1:
+        if line == "" or line is None:
             print("** class name missing **")
-            return False
-        elif args_list[0] not in classes:
-            print("** class doesn't exist **")
-            return False
-        elif id and len(args_list) < 2:
-            print("** instance id missing **")
-            return False
         else:
-            objects = storage.all()
-            key = "{}.{}".format(args_list[0], args_list[1])
-            required_key = objects.get(key, None)
-            if required_key is None:
-                print("** no instance found ***")
-                return
-            print(required_key)
+            words = line.split(' ')
+            if words[0] not in classes:
+                print("** class doesn't exist **")
+            elif len(words) < 2:
+                print("** instance id missing **")
+            else:
+                key = "{}.{}".format(words[0], words[1])
+                if key not in storage.all():
+                    print("** no instance found **")
+                else:
+                    print(storage.all()[key])
 
     def do_destroy(self, args):
         """
@@ -181,6 +175,15 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, args):
         """Exits the shell when Ctrl+D is pressed"""
         return True
+    
+    def emptyline(self):
+        """Override default `empty line + return` behaviour.
+        """
+        pass
+    def do_help(self, arg):
+        """To get help on a command, type help <topic>.
+        """
+        return super().do_help(arg)
 
 
 if __name__ == "__main__":
