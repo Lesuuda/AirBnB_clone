@@ -32,7 +32,6 @@ class HBNBCommand(cmd.Cmd):
     intro = ""
     prompt = "(hbnb) "
 
-
     def do_create(self, args):
         """
         Creates a new instance of BaseModel,
@@ -51,10 +50,10 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
 
-
     def do_show(self, args):
         """
-        Prints the string representation of an instance based on the class name and id.
+        Prints the string representation of an instance based
+        on the class name and id.
         """
         args_list = args.split()
         if len(args_list) < 1:
@@ -99,25 +98,25 @@ class HBNBCommand(cmd.Cmd):
                 return
             del objects[key]
             storage.save()
-    
+
     def do_all(self, args):
         """
-        Prints all string representation of all instances based or not on the class name
+        Prints all string representation of all instances based
+        or not on the class name
         """
         args_list = args.split()
-        objects = storage.all()
+        obj = storage.all()
         if len(args_list) < 1:
-            print(["{}".format(str(v)) for _, v in objects.items()])
+            print(["{}".format(str(v)) for _, v in obj.items()])
             return
-        if args_list[0] not in classes.keys():
+        if args[0] not in classes.keys():
             print("** class doesn't exist **")
             return
         else:
             print(["{}".format(str(v))
-                  for _, v in objects.items() if type(v).__name__ == args_list[0]])
+                  for _, v in obj.items() if type(v).__name__ == args_list[0]])
             return
 
-    
     def do_update(self, args):
         """
         update <class name> <id> <attribute name> "<attribute value>"
@@ -138,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
         if req_instance is None:
             print("** no instance found **")
             return
-        
+
         if len(args_list) < 3:
             print("** attribute name missing **")
             return
@@ -155,20 +154,19 @@ class HBNBCommand(cmd.Cmd):
             elif isinstance(attribute_value, float):
                 attribute_value = float(attribute_value)
         except (ValueError, TypeError):
-                    print("** invalid value type for the attribute **")
-                    return
+            print("** invalid value type for the attribute **")
+            return
         setattr(req_instance, attribute_name, attribute_value)
         storage.save()
 
     def do_quit(self, args):
         """Quit command to exit the program"""
         return True
-    
+
     def do_EOF(self, args):
         """Exits the shell when Ctrl+D is pressed"""
         return True
-    
-    
-    
+
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

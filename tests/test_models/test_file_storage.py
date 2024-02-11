@@ -77,14 +77,12 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(r, models.storage.all(). values())
 
     def test_save_method(self):
-        # Test if save() method correctly serializes __objects to file
         test_instance = BaseModel()
         self.file_storage.new(test_instance)
         self.file_storage.save()
         self.assertTrue(os.path.exists(FileStorage._FileStorage__file_path))
 
     def test_reload_method(self):
-        # Test if reload() method correctly deserializes the file to __objects
         test_instance = BaseModel()
         self.file_storage.new(test_instance)
         self.file_storage.save()
@@ -93,12 +91,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(key, FileStorage._FileStorage__objects)
 
     def test_reload_method_empty_file(self):
-        # Test if reload() method handles an empty file gracefully
-        # No exception should be raised
         empty_file_path = "empty_file.json"
         with open(empty_file_path, 'w') as empty_file:
             empty_file.write("")
         self.file_storage._FileStorage__file_path = empty_file_path
         self.file_storage.reload()
+        
 if __name__ == '__main__':
     unittest.main()
