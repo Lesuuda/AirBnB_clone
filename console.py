@@ -1,6 +1,21 @@
 #!/usr/bin/python3
 """
  contains the entry point of the command interpreter
+ it enables us to perfom different tasks like creating, updating
+ showing and destroying items
+ Typical usage example:
+
+    $ ./console
+    (hbnb)
+
+    (hbnb) help
+    Documented commands (type help <topic>):
+    ========================================
+    EOF  create  help  quit
+
+    (hbnb)
+    (hbnb) quit
+    $
 """
 
 
