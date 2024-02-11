@@ -2,7 +2,8 @@
 
 import unittest
 import os
-from models.engine.file_storage import FileStorage  # Replace 'your_module' with the actual module name
+import models
+from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -19,6 +20,22 @@ class TestFileStorage(unittest.TestCase):
     def tearDown(self):
         if os.path.exists(FileStorage._FileStorage__file_path):
             os.remove(FileStorage._FileStorage__file_path)
+    
+    def test_FileStorage_instantiation_no_args(self):
+        self.assertEqual(type(FileStorage()), FileStorage)
+
+    def test_FileStorage_instantiation_with_arg(self):
+        with self.assertRaises(TypeError):
+            FileStorage(None)
+
+    def test_FileStorage_file_path_is_private_str(self):
+        self.assertEqual(str, type(FileStorage._FileStorage__file_path))
+
+    def testFileStorage_objects_is_private_dict(self):
+        self.assertEqual(dict, type(FileStorage._FileStorage__objects))
+
+    def test_storage_initializes(self):
+        self.assertEqual(type(models.storage), FileStorage)
 
     def test_attributes(self):
         self.assertEqual(FileStorage._FileStorage__file_path, "file.json")
@@ -30,11 +47,34 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(result, FileStorage._FileStorage__objects)
 
     def test_new_method(self):
-        # Test if new() method adds an object to __objects correctly
-        test_instance = BaseModel()
-        self.file_storage.new(test_instance)
-        key = f"{test_instance.__class__.__name__}.{test_instance.id}"
-        self.assertIn(key, FileStorage._FileStorage__objects)
+        b = BaseModel()
+        u = User()
+        s = State()
+        p = Place()
+        c = City()
+        a = Amenity()
+        r = Review()
+        models.storage.new(b)
+        models.storage.new(u)
+        models.storage.new(s)
+        models.storage.new(p)
+        models.storage.new(c)
+        models.storage.new(a)
+        models.storage.new(r)
+        self.assertIn("BaseModel." + b.id, models.storage.all().keys())
+        self.assertIn(b, models.storage.all(). values())
+        self.assertIn("User." + u.id, models.storage.all().keys())
+        self.assertIn(u, models.storage.all(). values())
+        self.assertIn("State." + s.id, models.storage.all().keys())
+        self.assertIn(s, models.storage.all(). values())
+        self.assertIn("Place." + p.id, models.storage.all().keys())
+        self.assertIn(p, models.storage.all(). values())
+        self.assertIn("City." + c.id, models.storage.all().keys())
+        self.assertIn(c, models.storage.all(). values())
+        self.assertIn("Amenity." + a.id, models.storage.all().keys())
+        self.assertIn(a, models.storage.all(). values())
+        self.assertIn("Review." + r.id, models.storage.all().keys())
+        self.assertIn(r, models.storage.all(). values())
 
     def test_save_method(self):
         # Test if save() method correctly serializes __objects to file
