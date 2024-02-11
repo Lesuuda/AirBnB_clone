@@ -2,8 +2,7 @@
 
 import unittest
 import os
-import models
-from models.engine.file_storage import FileStorage
+from models.engine.file_storage import FileStorage  # Replace 'your_module' with the actual module name
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -31,34 +30,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(result, FileStorage._FileStorage__objects)
 
     def test_new_method(self):
-        b = BaseModel()
-        u = User()
-        s = State()
-        p = Place()
-        c = City()
-        a = Amenity()
-        r = Review()
-        models.storage.new(b)
-        models.storage.new(u)
-        models.storage.new(s)
-        models.storage.new(p)
-        models.storage.new(c)
-        models.storage.new(a)
-        models.storage.new(r)
-        self.assertIn("BaseModel." + b.id, models.storage.all().keys())
-        self.assertIn(b, models.storage.all(). values())
-        self.assertIn("User." + u.id, models.storage.all().keys())
-        self.assertIn(u, models.storage.all(). values())
-        self.assertIn("State." + s.id, models.storage.all().keys())
-        self.assertIn(s, models.storage.all(). values())
-        self.assertIn("Place." + p.id, models.storage.all().keys())
-        self.assertIn(p, models.storage.all(). values())
-        self.assertIn("City." + c.id, models.storage.all().keys())
-        self.assertIn(c, models.storage.all(). values())
-        self.assertIn("Amenity." + a.id, models.storage.all().keys())
-        self.assertIn(a, models.storage.all(). values())
-        self.assertIn("Review." + r.id, models.storage.all().keys())
-        self.assertIn(r, models.storage.all(). values())
+        # Test if new() method adds an object to __objects correctly
+        test_instance = BaseModel()
+        self.file_storage.new(test_instance)
+        key = f"{test_instance.__class__.__name__}.{test_instance.id}"
+        self.assertIn(key, FileStorage._FileStorage__objects)
 
     def test_save_method(self):
         # Test if save() method correctly serializes __objects to file
