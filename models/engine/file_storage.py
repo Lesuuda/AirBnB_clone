@@ -19,7 +19,8 @@ from models.place import Place
 class FileStorage():
     """
      class FileStorage that serializes instances to a JSON file and
-     deserializes JSON file to instances by first converting python dictionaries
+     deserializes JSON file to instances by first converting
+     python dictionaries
      to strings and saving it to a JSON file. when deserializing,
      the JSON string is first converted to a python dictionary
     """
@@ -39,7 +40,7 @@ class FileStorage():
         returns the dictionary __objects
         """
         return FileStorage.__objects
-    
+
     def new(self, obj):
         """
         sets in __objects the obj with key <obj class name>.id
@@ -53,18 +54,20 @@ class FileStorage():
         """
         with open(FileStorage.__file_path, 'w') as f:
             json.dump(
-                {key: value.to_dict() for key, value in FileStorage.__objects.items()}, f)
-        
+                {key: value.to_dict()
+                 for key, value in FileStorage.__objects.items()}, f)
+
     def reload(self):
         """
-        deserializes the JSON file to __objects (only if the JSON file (__file_path) exists;
+        deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists;
         otherwise, do nothing.
         If the file doesn’t exist, no exception should be raised)
         """
 
         classes = {'BaseModel': BaseModel, 'User': User,
-                           'Amenity': Amenity, 'City': City, 'State': State,
-                           'Place': Place, 'Review': Review}
+                   'Amenity': Amenity, 'City': City, 'State': State,
+                   'Place': Place, 'Review': Review}
 
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as f:
@@ -73,8 +76,8 @@ class FileStorage():
                     try:
                         dict_obj = json.loads(file_content)
                         FileStorage.__objects = {
-                k: classes[k.split('.')[0]](**v)
-                for k, v in dict_obj.items()}
+                         k: classes[k.split('.')[0]](**v)
+                         for k, v in dict_obj.items()}
                     except json.JSONDecodeError:
                         pass
                 else:

@@ -9,12 +9,12 @@ import models
 from uuid import uuid4
 from datetime import datetime
 
+
 class BaseModel:
     """
     base class that defines all common attributes/methods
     for other classes
     """
-
 
     def __init__(self, *args, **kwargs):
         """
@@ -33,14 +33,13 @@ class BaseModel:
             self.updated_at = datetime.now()
             models.storage.new(self)
 
-
     def __str__(self):
         """
         it represents class object as strings
         """
         return "([{}] ({}) {}".format(
             type(self).__name__, self.id, self.__dict__)
-    
+
     def save(self):
         """
          updates the public instance attribute
@@ -49,7 +48,6 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.save()
 
-    
     def to_dict(self):
         """
         returns a dictionary containing all keys/values of
@@ -60,4 +58,3 @@ class BaseModel:
         dictionary['created_at'] = dictionary['created_at'].isoformat()
         dictionary['updated_at'] = dictionary['updated_at'].isoformat()
         return dictionary
-    

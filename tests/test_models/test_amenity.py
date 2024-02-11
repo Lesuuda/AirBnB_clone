@@ -3,6 +3,7 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models.amenity import Amenity
 
+
 class TestAmenity(unittest.TestCase):
 
     def test_inheritance(self):
@@ -37,6 +38,7 @@ class TestAmenity(unittest.TestCase):
         self.assertIn('__class__', amenity_dict)
         self.assertIn('created_at', amenity_dict)
         self.assertIn('updated_at', amenity_dict)
-       
+
+
 if __name__ == '__main__':
     unittest.main()

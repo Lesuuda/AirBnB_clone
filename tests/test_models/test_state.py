@@ -3,6 +3,7 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models.state import State
 
+
 class TestState(unittest.TestCase):
 
     def test_inheritance(self):
@@ -37,6 +38,7 @@ class TestState(unittest.TestCase):
         self.assertIn('__class__', state_dict)
         self.assertIn('created_at', state_dict)
         self.assertIn('updated_at', state_dict)
+
 
 if __name__ == '__main__':
     unittest.main()

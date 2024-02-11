@@ -3,6 +3,7 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models.review import Review
 
+
 class TestReview(unittest.TestCase):
 
     def test_inheritance(self):
@@ -24,6 +25,7 @@ class TestReview(unittest.TestCase):
         self.assertIn('__class__', review_dict)
         self.assertIn('created_at', review_dict)
         self.assertIn('updated_at', review_dict)
+
 
 if __name__ == '__main__':
     unittest.main()

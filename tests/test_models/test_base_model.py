@@ -10,6 +10,7 @@ from models.base_model import BaseModel
 from datetime import datetime
 from models.engine.file_storage import FileStorage
 
+
 class TestBaseModel(unittest.TestCase):
     """unittests for the base class"""
 
@@ -54,4 +55,3 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(obj_dict['__class__'], type(obj).__name__)
         self.assertEqual(obj_dict['created_at'], obj.created_at.isoformat())
         self.assertEqual(obj_dict['updated_at'], obj.updated_at.isoformat())
-    

@@ -175,11 +175,12 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, args):
         """Exits the shell when Ctrl+D is pressed"""
         return True
-    
+
     def emptyline(self):
         """Override default `empty line + return` behaviour.
         """
         pass
+
     def do_help(self, arg):
         """To get help on a command, type help <topic>.
         """

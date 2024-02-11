@@ -3,6 +3,7 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models.place import Place
 
+
 class TestPlace(unittest.TestCase):
 
     def test_inheritance(self):
@@ -29,6 +30,7 @@ class TestPlace(unittest.TestCase):
         self.assertIn('__class__', place_dict)
         self.assertIn('created_at', place_dict)
         self.assertIn('updated_at', place_dict)
-        
+
+
 if __name__ == '__main__':
     unittest.main()
