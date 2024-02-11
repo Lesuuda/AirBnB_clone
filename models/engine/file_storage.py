@@ -9,6 +9,11 @@ import json
 import os
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.review import Review
+from models.amenity import Amenity
+from models.place import Place
 
 
 class FileStorage():
@@ -57,7 +62,9 @@ class FileStorage():
         If the file doesn’t exist, no exception should be raised)
         """
 
-        classes = {'BaseModel': BaseModel, 'User': User}
+        classes = {'BaseModel': BaseModel, 'User': User,
+                           'Amenity': Amenity, 'City': City, 'State': State,
+                           'Place': Place, 'Review': Review}
 
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as f:
