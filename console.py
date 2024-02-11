@@ -55,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
         args_list = args.split()
 
         if len(args_list) < 1:
-            print("** classname missing **")
+            print("** class name missing **")
             return False
         if args_list[0] not in classes.keys():
             print("** class doesn't exist **")
@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args_list = args.split()
         if len(args_list) < 1:
-            print("** classname missing **")
+            print("** class name missing **")
             return False
         elif args_list[0] not in classes:
             print("** class doesn't exist **")
@@ -96,7 +96,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args_list = args.split()
         if len(args_list) < 1:
-            print("** classname missing **")
+            print("** class name missing **")
             return False
         elif args_list[0] not in classes:
             print("** class doesn't exist **")
@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args_list) < 1:
             print(["{}".format(str(v)) for _, v in obj.items()])
             return
-        if args[0] not in classes.keys():
+        if args_list[0] not in classes.keys():
             print("** class doesn't exist **")
             return
         else:
