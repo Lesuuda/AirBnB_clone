@@ -113,18 +113,34 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based
         or not on the class name
         """
-        args_list = args.split()
-        obj = storage.all()
-        if len(args_list) < 1:
-            print(["{}".format(str(v)) for _, v in obj.items()])
-            return
-        if args_list[0] not in classes.keys():
-            print("** class doesn't exist **")
-            return
+        if args == 'all':
+            # Handle the 'all' command
+            print(["{}".format(str(instance)) for instance in storage.all().values()])
+        elif ' ' in args:
+            # Split by space and extract class name
+            args_list = args.split()
+            class_name = args_list[1]
+            if class_name in classes.keys():
+                class_obj = classes[class_name]
+                instances = class_obj.all()
+                print(["{}".format(str(instance)) for instance in instances])
+            else:
+                print("** Class doesn't exist **")
+        elif '.' in args:
+            # Split by dot and extract class name
+            args_list = args.split('.')
+            class_name = args_list[0]
+            if class_name in classes.keys():
+                class_obj = classes[class_name]
+                instances = class_obj.all()
+                print(["{}".format(str(instance)) for instance in instances])
+            else:
+                print("** Class doesn't exist **")
         else:
-            print(["{}".format(str(v))
-                  for _, v in obj.items() if type(v).__name__ == args_list[0]])
-            return
+            print("** Invalid command. Use 'all <class name>' to retrieve instances **")
+
+        return
+
 
     def do_update(self, args):
         """
